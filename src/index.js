@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import GoogleLineChart from './GoogleLineChart';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+if (window.google) {
+    var google = window.google;
+    google.charts.load('current', {
+        'packages': ['line']
+    });
+    google.setOnLoadCallback(init);
+    function init() {
+        const graphType = 'hourly'; //hourly or daily
+        ReactDOM.render(<GoogleLineChart graphName="line" graphType={graphType}/>, document.querySelector('#root'));
+    }
+}
